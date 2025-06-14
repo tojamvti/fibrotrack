@@ -1,0 +1,58 @@
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.build/
+.buildlog/
+.history
+.svn/
+.swiftpm/
+migrate_working_dir/
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# VS Code (opcjonalnie)
+.vscode/
+
+# Flutter/Dart/Pub related
+**/doc/api/
+**/ios/Flutter/.last_build_id
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.pub-cache/
+.pub/
+/build/
+.packages
+.melos_tool/
+
+# Symbolication related
+app.*.symbols
+
+# Obfuscation related
+app.*.map.json
+
+# Android Studio
+/android/.gradle/
+/android/app/debug
+/android/app/profile
+/android/app/release
+/android/local.properties
+
+# iOS (jeśli planujesz iOS w przyszłości)
+/ios/Flutter/ephemeral/
+/ios/.symlinks/
+/ios/Pods/
+/ios/Flutter/Generated.xcconfig
+
+# Firebase or sensitive files (jeśli planowane)
+google-services.json
+*.jks
+*.keystore
