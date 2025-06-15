@@ -37,9 +37,7 @@ Każdy wpis zawiera m.in.:
 - `share` – `true/false`
 - `created_at`, `updated_at` – timestamp
 
-## ✨ Autor
 
-Mateusz Szygulski
 
 ## 📸 Zrzuty ekranu
 
@@ -67,3 +65,8 @@ Mateusz Szygulski
 <p align="center">
   <img src="assets/screenshots/statystyki.jpg" width="300"/>
 </p>
+
+
+## ✨ Autor
+
+Mateusz Szygulski
