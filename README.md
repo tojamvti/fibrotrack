@@ -41,4 +41,19 @@ Każdy wpis zawiera m.in.:
 
 Mateusz Szygulski
 
----
+## 📸 Zrzuty ekranu
+
+### 🔐 Ekran logowania
+![Logowanie](assets/screenshots/logowanie.jpg)
+
+### 📋 Menu główne
+![Menu główne](assets/screenshots/menu.jpg)
+
+### ➕ Dodawanie wpisu
+![Dodawanie wpisu](assets/screenshots/dodawanie.jpg)
+
+### 📅 Kalendarz wpisów
+![Kalendarz](assets/screenshots/kalendarz.jpg)
+
+### 📊 Statystyki
+![Statystyki](assets/screenshots/statystyki.jpg)
