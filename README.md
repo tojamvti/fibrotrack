@@ -1,3 +1,6 @@
+## Zobacz nową wersję na branch fibrotrack-v2##
+
+
 # 💙 FibroTrack
 
 **FibroTrack** to aplikacja mobilna wspierająca osoby zmagające się z fibromialgią i przewlekłym bólem.  
