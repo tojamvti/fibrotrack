@@ -43,17 +43,27 @@ Mateusz Szygulski
 
 ## 📸 Zrzuty ekranu
 
-### 🔐 Ekran logowania
-![Logowanie](assets/screenshots/logowanie.jpg)
+### 🔐 Logowanie
+<p align="center">
+  <img src="assets/screenshots/logowanie.jpg" width="300"/>
+</p>
 
 ### 📋 Menu główne
-![Menu główne](assets/screenshots/menu.jpg)
+<p align="center">
+  <img src="assets/screenshots/menu.jpg" width="300"/>
+</p>
 
 ### ➕ Dodawanie wpisu
-![Dodawanie wpisu](assets/screenshots/dodawanie.jpg)
+<p align="center">
+  <img src="assets/screenshots/dodawanie.jpg" width="300"/>
+</p>
 
-### 📅 Kalendarz wpisów
-![Kalendarz](assets/screenshots/kalendarz.jpg)
+### 📅 Kalendarz
+<p align="center">
+  <img src="assets/screenshots/kalendarz.jpg" width="300"/>
+</p>
 
 ### 📊 Statystyki
-![Statystyki](assets/screenshots/statystyki.jpg)
+<p align="center">
+  <img src="assets/screenshots/statystyki.jpg" width="300"/>
+</p>
