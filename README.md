@@ -1,16 +1,44 @@
-# fibrotrack_app
+# FibroTrack – aplikacja do monitorowania bólu
 
-A new Flutter project.
+**FibroTrack** to mobilna aplikacja napisana w Flutterze, która wspiera osoby zmagające się z fibromialgią oraz innymi przewlekłymi bólami. Umożliwia prowadzenie dziennika bólu, analizę objawów i dzielenie się doświadczeniami z innymi użytkownikami.
 
-## Getting Started
+## 📲 Funkcje
 
-This project is a starting point for a Flutter application.
+- 🔐 Logowanie / rejestracja użytkownika
+- ➕ Dodawanie wpisu:
+    - Lokalizacja bólu (z sublokalizacjami, np. "Ręka → Prawa")
+    - Charakter bólu (wybór z listy lub własne)
+    - Skala bólu (0–10)
+    - Notatka
+    - Data wystąpienia
+    - Możliwość anonimowego udostępnienia wpisu
+- ✏️ Edycja i usuwanie wpisów
+- 📅 Przegląd wpisów 
+- 📤 Ekran z udostępnionymi wpisami (shared entries)
+    - Możliwość usunięcia własnych wpisów z tej listy
 
-A few resources to get you started if this is your first Flutter project:
+    
+- 📊 Planowana funkcjonalność: generowanie wykresów i analiz statystycznych
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## 🛠️ Technologie
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Flutter + Dart
+- Firebase Authentication
+- Cloud Firestore
+
+
+Każdy wpis zawiera m.in.:
+
+- `pain_location` – np. `"Ręka_Prawa"` lub `"Inna lokalizacja"`
+- `pain_character` – np. `"Tępy"` lub `"Inny opis"`
+- `pain_intensity` – liczba 0–10
+- `note` – notatka tekstowa
+- `date` – ISO string daty
+- `share` – `true/false`
+- `created_at`, `updated_at` – timestamp
+
+## ✨ Autor
+
+Mateusz Szygulski
+
+---
