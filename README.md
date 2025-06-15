@@ -45,7 +45,7 @@ Mateusz Szygulski
 
 ### 🔐 Logowanie
 <p align="center">
-  <img src="assets/screenshots/logowanie.jpg" width="300"/>
+  <img src="assets/screenshots/logowanie.jpg" width="100"/>
 </p>
 
 ### 📋 Menu główne
