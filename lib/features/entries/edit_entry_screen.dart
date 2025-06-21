@@ -19,11 +19,14 @@ class EditEntryScreen extends StatefulWidget {
 
 class _EditEntryScreenState extends State<EditEntryScreen> {
   final _formKey = GlobalKey<FormState>();
+
   String? _selectedLocation;
   String? _selectedSubLocation;
   String? _customLocation;
+
   String? _selectedCharacter;
   String? _customCharacter;
+
   late TextEditingController _noteController;
   late DateTime _selectedDate;
   late int _painIntensity;
@@ -34,11 +37,14 @@ class _EditEntryScreenState extends State<EditEntryScreen> {
     super.initState();
     final data = widget.data;
 
+    // Obsługa sublokalizacji
     final loc = data['pain_location'] as String?;
-    if (loc != null && painLocations.any((k) => loc.startsWith(k))) {
-      final base = painLocations.firstWhere((k) => loc.startsWith(k));
-      _selectedLocation = base;
-      _selectedSubLocation = loc.length > base.length + 1 ? loc.substring(base.length + 1) : null;
+    if (loc != null && loc.contains(' – ')) {
+      final parts = loc.split(' – ');
+      _selectedLocation = parts[0];
+      _selectedSubLocation = parts[1];
+    } else if (loc != null && painLocations.contains(loc)) {
+      _selectedLocation = loc;
     } else {
       _selectedLocation = 'Inne';
       _customLocation = loc;
@@ -62,19 +68,22 @@ class _EditEntryScreenState extends State<EditEntryScreen> {
     final uid = FirebaseAuth.instance.currentUser?.uid;
     if (uid == null) return;
 
-    String? finalLocation;
+    String? location;
     if (_selectedLocation == 'Inne') {
-      finalLocation = _customLocation?.trim();
+      location = _customLocation?.trim();
     } else if (_selectedSubLocation != null) {
-      finalLocation = '${_selectedLocation}_$_selectedSubLocation';
+      location = '$_selectedLocation – $_selectedSubLocation';
     } else {
-      finalLocation = _selectedLocation;
+      location = _selectedLocation;
     }
 
+    final character = _selectedCharacter == 'Inne'
+        ? _customCharacter?.trim()
+        : _selectedCharacter;
+
     final updatedData = {
-      'pain_location': finalLocation,
-      'pain_character':
-          _selectedCharacter == 'Inne' ? _customCharacter?.trim() : _selectedCharacter,
+      'pain_location': location,
+      'pain_character': character,
       'note': _noteController.text.trim(),
       'pain_intensity': _painIntensity,
       'date': _selectedDate.toIso8601String(),
@@ -114,7 +123,6 @@ class _EditEntryScreenState extends State<EditEntryScreen> {
             .collection('pain_entries')
             .doc(widget.docId)
             .delete();
-
         if (mounted) Navigator.pop(context);
       }
     }
@@ -123,6 +131,7 @@ class _EditEntryScreenState extends State<EditEntryScreen> {
   @override
   Widget build(BuildContext context) {
     final textStyle = Theme.of(context).textTheme.titleMedium;
+    final sublocations = subPainLocations[_selectedLocation];
 
     return Scaffold(
       appBar: AppBar(title: const Text('Edytuj wpis')),
@@ -147,17 +156,6 @@ class _EditEntryScreenState extends State<EditEntryScreen> {
                 validator: (val) =>
                     (val == null || val.isEmpty) ? 'Wybierz lokalizację' : null,
               ),
-              if (_selectedLocation != null &&
-                  subPainLocations[_selectedLocation!] != null)
-                DropdownButtonFormField<String>(
-                  value: _selectedSubLocation,
-                  decoration: const InputDecoration(labelText: 'Doprecyzuj'),
-                  items: subPainLocations[_selectedLocation!]!
-                      .map((subloc) =>
-                          DropdownMenuItem(value: subloc, child: Text(subloc)))
-                      .toList(),
-                  onChanged: (val) => setState(() => _selectedSubLocation = val),
-                ),
               if (_selectedLocation == 'Inne')
                 TextFormField(
                   initialValue: _customLocation,
@@ -167,6 +165,17 @@ class _EditEntryScreenState extends State<EditEntryScreen> {
                       (_selectedLocation == 'Inne' && (val == null || val.isEmpty))
                           ? 'Podaj własną lokalizację'
                           : null,
+                ),
+              if (_selectedLocation != null &&
+                  _selectedLocation != 'Inne' &&
+                  sublocations != null)
+                DropdownButtonFormField<String>(
+                  value: _selectedSubLocation,
+                  decoration: const InputDecoration(labelText: 'Doprecyzuj lokalizację'),
+                  items: sublocations
+                      .map((s) => DropdownMenuItem(value: s, child: Text(s)))
+                      .toList(),
+                  onChanged: (val) => setState(() => _selectedSubLocation = val),
                 ),
               const SizedBox(height: 16),
 
@@ -211,7 +220,9 @@ class _EditEntryScreenState extends State<EditEntryScreen> {
               ListTile(
                 contentPadding: EdgeInsets.zero,
                 title: const Text('Data'),
-                subtitle: Text('${_selectedDate.day}.${_selectedDate.month}.${_selectedDate.year}'),
+                subtitle: Text(
+                  '${_selectedDate.day}.${_selectedDate.month}.${_selectedDate.year}',
+                ),
                 trailing: const Icon(Icons.calendar_today),
                 onTap: () async {
                   final picked = await showDatePicker(
@@ -236,13 +247,13 @@ class _EditEntryScreenState extends State<EditEntryScreen> {
               const SizedBox(height: 32),
 
               ElevatedButton.icon(
+                icon: const Icon(Icons.save),
+                label: const Text('Zapisz zmiany'),
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     _updateEntry();
                   }
                 },
-                icon: const Icon(Icons.save),
-                label: const Text('Zapisz zmiany'),
               ),
               const SizedBox(height: 12),
               TextButton.icon(

@@ -27,52 +27,70 @@ class _AddEntryScreenState extends State<AddEntryScreen> {
   bool _share = false;
 
   Future<void> _saveEntry() async {
-    final uid = FirebaseAuth.instance.currentUser?.uid;
-    if (uid == null) return;
+  final uid = FirebaseAuth.instance.currentUser?.uid;
+  if (uid == null) return;
 
-    String? location;
-    if (_selectedLocation == 'Inne') {
-      location = _customLocation?.trim();
-    } else if (_selectedSubLocation != null) {
-      location = '${_selectedLocation!} – $_selectedSubLocation';
-    } else {
-      location = _selectedLocation;
-    }
-
-    final character = _selectedCharacter == 'Inne'
-        ? _customCharacter?.trim()
-        : _selectedCharacter;
-
-    final entryData = {
-      'date': _selectedDate.toIso8601String(),
-      'pain_location': location,
-      'pain_intensity': _painIntensity,
-      'pain_character': character,
-      'note': _noteController.text.trim(),
-      'share': _share,
-      'created_at': FieldValue.serverTimestamp(),
-    };
-
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc(uid)
-        .collection('pain_entries')
-        .add(entryData);
-
-    if (_share) {
-      final sharedData = Map.of(entryData)..remove('share');
-      await FirebaseFirestore.instance
-          .collection('shared_entries')
-          .add(sharedData);
-    }
-
-    if (mounted) Navigator.pop(context);
+  String? location;
+  if (_selectedLocation == 'Inne') {
+    location = _customLocation?.trim();
+  } else if (_selectedSubLocation != null) {
+    location = '$_selectedLocation – $_selectedSubLocation';
+  } else {
+    location = _selectedLocation;
   }
+
+  final character = _selectedCharacter == 'Inne'
+      ? _customCharacter?.trim()
+      : _selectedCharacter;
+
+  final entryData = {
+    'date': _selectedDate.toIso8601String(),
+    'pain_location': location,
+    'pain_intensity': _painIntensity,
+    'pain_character': character,
+    'note': _noteController.text.trim(),
+    'share': _share,
+    'created_at': FieldValue.serverTimestamp(),
+  };
+
+  await FirebaseFirestore.instance
+      .collection('users')
+      .doc(uid)
+      .collection('pain_entries')
+      .add(entryData);
+
+  if (_share) {
+    final sharedData = Map.of(entryData)..remove('share');
+    await FirebaseFirestore.instance
+        .collection('shared_entries')
+        .add(sharedData);
+  }
+
+  if (mounted) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      content: Row(
+        children: const [
+          Icon(Icons.check_circle, color: Colors.white),
+          SizedBox(width: 12),
+          Text('Zapisano!'),
+        ],
+      ),
+      backgroundColor: Colors.green,
+      duration: const Duration(seconds: 2),
+    ),
+  );
+
+  await Future.delayed(const Duration(seconds: 2));
+  Navigator.pop(context);
+}
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
     final textStyle = Theme.of(context).textTheme.titleMedium;
-
     final sublocations = subPainLocations[_selectedLocation];
 
     return Scaffold(
@@ -89,7 +107,8 @@ class _AddEntryScreenState extends State<AddEntryScreen> {
                 decoration: const InputDecoration(labelText: 'Gdzie boli'),
                 items: painLocations
                     .map((loc) => DropdownMenuItem(value: loc, child: Text(loc)))
-                    .toList(),
+                    .toList()
+                  ..add(const DropdownMenuItem(value: 'Inne', child: Text('Inne'))),
                 onChanged: (val) => setState(() {
                   _selectedLocation = val;
                   _selectedSubLocation = null;
@@ -127,7 +146,8 @@ class _AddEntryScreenState extends State<AddEntryScreen> {
                 decoration: const InputDecoration(labelText: 'Charakter bólu'),
                 items: painCharacters
                     .map((ch) => DropdownMenuItem(value: ch, child: Text(ch)))
-                    .toList(),
+                    .toList()
+                  ..add(const DropdownMenuItem(value: 'Inne', child: Text('Inne'))),
                 onChanged: (val) => setState(() {
                   _selectedCharacter = val;
                   _customCharacter = null;
