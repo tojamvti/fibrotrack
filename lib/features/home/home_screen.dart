@@ -23,7 +23,7 @@ class HomeScreen extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton.icon(
-        icon: Icon(icon, color: iconColor),
+        icon: Icon(icon, color: Colors.blue[200]),
         label: Text(label, style: textStyle),
         onPressed: onPressed,
       ),
@@ -45,7 +45,7 @@ class HomeScreen extends StatelessWidget {
               Text(
                 'FibroTrack',
                 style: TextStyle(
-                  fontSize: 40,
+                  fontSize: 80,
                   fontWeight: FontWeight.bold,
                   color: Theme.of(context).colorScheme.primary,
                 ),

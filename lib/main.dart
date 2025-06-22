@@ -27,7 +27,7 @@ class FibroTrackApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'FibroTrack',
-      theme: AppTheme.lightTheme,   // lub ThemeData.light() jeśli nie masz AppTheme
+      theme: AppTheme.darkTheme,   // lub ThemeData.light() jeśli nie masz AppTheme
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.dark,    // Wymuszenie ciemnego motywu
       locale: const Locale('pl', 'PL'), // Język polski

@@ -8,7 +8,7 @@ class AppColors {
   static const Color lightText = Color(0xFF333333); // ciemny szary tekst
 
   // 🌙 Ciemny motyw
-  static const Color darkPrimary = Colors.deepPurple;
+  static const Color darkPrimary = Color.fromARGB(255, 24, 0, 65);
   static const Color darkBackground = Color(0xFF121212); // typowe dark theme tło
   static const Color darkCard = Color(0xFF1E1E1E); // ciemniejszy niż tło
   static const Color darkText = Color(0xFFE0E0E0); // jasny tekst na ciemnym tle
